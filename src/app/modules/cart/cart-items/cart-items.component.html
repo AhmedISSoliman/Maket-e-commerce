@@ -1,0 +1,125 @@
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcrumb__text">
+          <h4>Shopping Cart</h4>
+          <div class="breadcrumb__links">
+            <a routerLink="/products">Home</a>
+            <a routerLink="/shop">Shop</a>
+            <span>Shopping Cart</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Breadcrumb Section End -->
+<!-- Shopping Cart Section Begin -->
+<section class="shopping-cart spad">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="shopping__cart__table">
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Size</th>
+                <th>Total</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="currentCartItems$ | async as cartItems ">
+              <tr *ngFor="let product of cartItems ;let i = index">
+                <td class="product__cart__item"
+                  style="display: flex;flex-direction: column; align-items: center;width:200px">
+                  <div class="product__cart__item__pic">
+                    <img [src]="product.item.image" width="110px" alt="">
+                  </div>
+                  <div class="product__cart__item__text">
+                    <h6>{{product.item.title}}</h6>
+                    <h5>{{product.item.price |currency}}</h5>
+                  </div>
+                </td>
+                <td class="quantity__item">
+                  <div class="quantity">
+                    <div class="pro-qty-2">
+                      <ng-select [(ngModel)]="product.item.amount" (change)="checkMinAndMaxValue(product.item)">
+                        <ng-option *ngFor="let item of listofAvailableItems" [value]="item.value">
+                          {{item.value}}
+                        </ng-option>
+                      </ng-select>
+                    </div>
+                  </div>
+                </td>
+                <td class="quantity__item">
+                  <div class="quantity">
+                    <div class="pro-qty-2">
+                      <ng-select [(ngModel)]="product.item.size" (change)="checkMinAndMaxSize(product.item)">
+                        <ng-option *ngFor="let item of listofAvailableSizes" [value]="item.value">
+                          {{item.value}}
+                        </ng-option>
+                      </ng-select>
+
+                      <!-- <span>{{product.quantity}} </span> -->
+                    </div>
+                  </div>
+                </td>
+                <td class="cart__price">{{product.item.price * product.item.amount |currency}}</td>
+                <td class="cart__close"><i (click)="deleteItemfromCart(i)" class="fa fa-close"></i></td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="(currentCartItems$|async)?.length  == 0">
+              <tr>
+                <td colspan="4">No products to show</td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="continue__btn">
+              <a routerLink="/shop">Continue Shopping</a>
+            </div>
+          </div>
+          <!-- <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="continue__btn update__btn">
+              <a><i class="fa fa-spinner"></i> Update cart</a>
+            </div>
+          </div> -->
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="cart__discount">
+          <h6>Discount codes</h6>
+          <form [formGroup]="couponForm">
+            <div class="form-group">
+              <input type="text" placeholder="Coupon code" class="form-control" formControlName="couponCode">
+            </div>
+            <button type="submit" *ngIf="!((allAmount$ | async).coupon)"
+              (click)="checkCouponAvilabilty()">Apply</button>
+            <button type="submit" *ngIf="((allAmount$ | async).coupon)" (click)="removeCoupon()">Remove</button>
+          </form>
+        </div>
+        <div class="cart__total">
+          <h6>Cart total</h6>
+          <ul *ngIf="allAmount$ | async as allAmount">
+            <li>Subtotal <span>{{allAmount.subTotal |currency}}</span></li>
+            <li>Tax <span>{{allAmount.taxTotal |currency}}</span></li>
+            <li *ngIf="allAmount.coupon">Coupon <span>-{{allAmount.coupon
+                |currency}}</span>
+            </li>
+            <li>Total <span>{{allAmount.totalAmount |currency}}</span></li>
+            <!-- <li>Total <span *ngIf="allAmount.coupon">{{allAmount.totalAmount |currency}}</span></li> -->
+          </ul>
+          <a *ngIf="isDisabled" routerLink="/check-out" class="primary-btn">Proceed to checkout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Shopping Cart Section End -->

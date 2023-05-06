@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="login-form w-75">
+    <div class="login-form-title text-center text-bold">
+      <h3>
+        Log In
+      </h3>
+    </div>
+    <div class="login-form-container">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-12 mb-3">
+            <div class="form-group">
+              <label for="userName">User Name:</label>
+              <input formControlName="userName" type="text" class="form-control" name="userName" id="userName">
+            </div>
+            <div class="text-danger" *ngIf="(loginForm.controls['userName'].touched|| isFormSubmitted)&&loginForm.controls['userName'].errors&&loginForm.controls['userName'].errors['required']
+              !=null">
+              <b> User Name</b> is required
+            </div>
+            <div class="text-danger" *ngIf="(loginForm.controls['userName'].touched|| isFormSubmitted)&&loginForm.controls['userName'].errors&&loginForm.controls['userName'].errors['minlength']
+              !=null">
+              <b> User Name</b> should be equal or more than 3
+            </div>
+            <div class="text-danger" *ngIf="(loginForm.controls['userName'].touched|| isFormSubmitted)&&loginForm.controls['userName'].errors&&loginForm.controls['userName'].errors['maxlength']
+              !=null">
+              <b> User Name</b> should be equal or less than 20
+            </div>
+          </div>
+          <div class=" col-12">
+            <div class="form-group">
+              <label for="password">Password:</label>
+              <input formControlName="password" type="text" class="form-control" name="password" id="password">
+            </div>
+            <div class="text-danger" *ngIf="(loginForm.controls['password'].touched|| isFormSubmitted)&&loginForm.controls['password'].errors&&loginForm.controls['password'].errors['required']
+                          !=null">
+              <b> Password</b> is required
+            </div>
+            <!-- <div class="text-danger" *ngIf="(loginForm.controls['password'].touched|| isFormSubmitted)&&loginForm.controls['password'].errors&&loginForm.controls['password'].errors['minlength']
+                          !=null">
+              <b> Password</b> should be more than 8
+            </div>
+            <div class="text-danger" *ngIf="(loginForm.controls['password'].touched|| isFormSubmitted)&&loginForm.controls['password'].errors&&loginForm.controls['password'].errors['maxlength']
+                          !=null">
+              <b> Password</b> should be less than 20
+            </div> -->
+            <!-- <div class="text-danger" *ngIf="(loginForm.controls['password'].touched|| isFormSubmitted)&&loginForm.controls['password'].errors&&loginForm.controls['password'].errors['pattern']
+                                      !=null">
+              <b> Password</b> should be at least 6 chars,including at least one uppercase,one number and one special
+              character
+            </div> -->
+          </div>
+        </div>
+        <div style="display: flex;justify-content: flex-end;">
+          <button type="submit" class="btn btn-dark">
+            Login
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

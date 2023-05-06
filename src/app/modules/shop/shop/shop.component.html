@@ -1,0 +1,178 @@
+<div class="container">
+  <section class="breadcrumb-option">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="breadcrumb__text">
+            <h4>Shop</h4>
+            <div class="breadcrumb__links">
+              <a style="cursor:pointer ;" [routerLink]="'/products'">Home</a>
+              <span>Shop</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Breadcrumb Section End -->
+  <section class=" shop spad">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="shop__sidebar">
+            <div class="shop__sidebar__search">
+              <form action="#">
+                <input type="text" placeholder="Search...">
+                <button type="submit"><span class="icon_search"></span></button>
+              </form>
+            </div>
+            <div class="shop__sidebar__accordion">
+              <div class="accordion" id="accordionExample">
+                <div class="card">
+                  <div class="card-heading">
+                    <a data-toggle="collapse" data-target="#collapseOne">Categories</a>
+                  </div>
+                  <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                    <div class="card-body">
+                      <div class="shop__sidebar__categories">
+                        <ul class="nice-scroll">
+                          <li style="cursor: pointer;"><a (click)="getAllProducts()">All</a></li>
+                          <li *ngFor="let item of allCategories$ | async as categories" style="cursor: pointer;"><a
+                              class="w-100" (click)="getProductInCategory(item)">{{item}}</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="shop__sidebar__accordion">
+              <div class="accordion" id="accordionExample2">
+                <div class="card" style="width:103% ;">
+                  <div class="card-heading">
+                    <a data-toggle="collapse" data-target="#collapseOne2">Filter By Price</a>
+                  </div>
+                  <div id="collapseOne2" class="collapse show" data-parent="#accordionExample2">
+                    <div class="card-body">
+                      <div class="shop__sidebar__categories">
+                        <ngx-slider (userChange)="filterBy($event)" [(value)]="priceFrom" [(highValue)]="priceTo"
+                          [options]="options">
+                        </ngx-slider>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-9">
+          <div class="shop__product__option">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="shop__product__option__left">
+                  <p>Showing 1 – {{(sortedProducts$ | async)?.length}} of {{(sortedProducts$ | async)?.length}} results
+                  </p>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="shop__product__option__right">
+                  <p class="mr-2">Sort by Price:</p>
+                  <select class="nice-select" tabindex="0" (change)="sortByPriceChanged($any($event.target).value)">
+                    <option *ngFor="let item of sortedPrices" [value]="item.key" class="option selected focus"
+                      value="default">{{item.value}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="shop__product__option__right">
+                  <p class="mr-2">Sort by:</p>
+                  <select class="nice-select" tabindex="0" (change)="sortChange(selectedSortOptions)"
+                    [(ngModel)]="selectedSortOptions">
+                    <option *ngFor="let item of sortingProducts" [value]="item.value" class="option selected focus"
+                      value="default">{{item.value}}</option>
+                  </select>
+                </div>
+              </div>
+              <!-- <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="shop__product__option__right">
+                  <p>filter by Price:</p>
+                  <select (change)="filterBy(sortedProducts,$event)">
+                    <option value="default">Default</option>
+                    <option value="0-100">$0 - $100</option>
+                    <option value="filter-1">$100 - $1000</option>
+                  </select>
+                </div>
+              </div> -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let product of sortedProducts$ | async ;let i = index">
+
+              <div class="product__item">
+                <div class="product__item__pic set-bg text-center">
+                  <img (click)="navigateToDetails(product.id)" class="h-100" [src]="product.image" alt="Product Image">
+                  <ul class="product__hover">
+                    <li
+                      style="display: flex;  background-color: white;  justify-content: center;    padding-bottom: 0.25rem;  padding-top: 0.25rem;cursor: pointer;">
+                      <a>
+                        <!-- <img src="./../../../../assets/img/icon/heart.png"
+                          alt=""> -->
+                        <i class="fas fa-heart" (click)="addToWishList(product)"></i>
+                      </a>
+                    </li>
+                    <li><a><img src="./../../../../assets/img/icon/compare.png" alt="">
+                        <span>Compare</span></a>
+                    </li>
+                    <li><a><img src="./../../../../assets/img/icon/search.png" alt=""></a></li>
+                  </ul>
+                </div>
+                <div class="product__item__text">
+                  <h6 style="height: 80px;">{{product.title}}</h6>
+                  <a (click)="addToCart(product)" class="add-cart" style="cursor: pointer;">+ Add To Cart</a>
+                  <div class="sizeandamount">
+                    <ng-select style="width: 40%;" [(ngModel)]="product.amount"
+                      (change)="checkMinAndMaxValue(product.amount)">
+                      <ng-option *ngFor="let item of listofAvailableItems" [value]="item.value">
+                        {{item.value}}
+                      </ng-option>
+                    </ng-select>
+                    <ng-select style="width: 40%;" [(ngModel)]="product.size"
+                      (change)="checkMinAndMaxSize(product.size)">
+                      <ng-option *ngFor="let item of listofAvailableSizes" [value]="item.value">
+                        {{item.value}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                  <div class="rating">
+                    <ng-template #t let-fill="fill">
+                      <span class="star" [class.full]="fill === 100">
+                        <span class="half" [style.width.%]="fill">&bigstar;</span>&bigstar;
+                      </span>
+                    </ng-template>
+
+                    <ngb-rating [(rate)]="product.rating.rate" [starTemplate]="t" [readonly]="true" [max]="5">
+                    </ngb-rating>
+                  </div>
+                  <h5>{{product.price | currency}}</h5>
+                  <div class="product__color__select">
+                    <label for="pc-4">
+                      <input type="radio" id="pc-4">
+                    </label>
+                    <label class="active black" for="pc-5">
+                      <input type="radio" id="pc-5">
+                    </label>
+                    <label class="grey" for="pc-6">
+                      <input type="radio" id="pc-6">
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

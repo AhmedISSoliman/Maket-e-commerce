@@ -1,0 +1,14 @@
+
+.product__item {
+    overflow: inherit;
+}
+.sizeandamount{
+display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+.selected{
+  color:red;
+}
+

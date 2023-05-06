@@ -1,0 +1,255 @@
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcrumb__text">
+          <h4>Check Out</h4>
+          <div class="breadcrumb__links">
+            <a routerLink="/products">Home</a>
+            <a routerLink="/shop">Shop</a>
+            <span>Check Out</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Checkout Section Begin -->
+<section class="checkout spad">
+  <div class="container">
+    <div class="checkout__form">
+      <div class="row">
+        <div class="col-lg-7 col-md-6">
+          <!-- <h6 class="coupon__code"><span class="icon_tag_alt"></span> Have a coupon? <a href="#">Click
+                here</a> to enter your code</h6> -->
+          <h6 class="checkout__title">Billing Details</h6>
+          <mat-stepper linear #stepper orientation="vertical">
+
+            <mat-step [style.pointer-events]="shippingMethodsForm.invalid?'none':'painted'"
+              [stepControl]="shippingMethodsForm" errorMessage="Shipping Method is required.">
+              <form [formGroup]="shippingMethodsForm">
+
+                <ng-template matStepLabel>Shipping Method</ng-template>
+                <div class="row">
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group d-flex">
+                      <input class="example-radio-button" type="radio" value="onDoor" id="onDoor" name="shippingMethod"
+                        class="example-margin" formControlName="shippingMethod">
+                      <label for="onDoor" style="cursor: pointer">
+                        On Door
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group d-flex">
+                      <input class="example-radio-button" type="radio" id="fromNearPlace" value="NearPlace"
+                        name="shippingMethod" class="example-margin mr-2" formControlName="shippingMethod">
+                      <label for="fromNearPlace" style="cursor: pointer">Near place</label>
+                    </div>
+                  </div>
+                  <div class="text-danger"
+                    *ngIf="(shippingMethodsForm.controls['shippingMethod'].touched || isFormSubmitted)&& shippingMethodsForm.controls['shippingMethod'].errors&& shippingMethodsForm.controls['shippingMethod'].errors['required'] != null">
+                    Shipping Method is Required
+                  </div>
+                </div>
+                <div>
+                  <button [disabled]="shippingMethodsForm.invalid" mat-button matStepperNext>Next</button>
+                </div>
+              </form>
+            </mat-step>
+
+            <mat-step [style.pointer-events]="detailsForm.invalid?'none':'painted'" [stepControl]="detailsForm"
+              errorMessage="Details is required.">
+              <form [formGroup]="detailsForm">
+                <ng-template matStepLabel>Details</ng-template>
+                <div class="row">
+                  <div class="col-sm-12 col-md-6 col-lg-6">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Country</mat-label>
+                      <input matInput placeholder="Country" formControlName="country">
+                      <mat-error
+                        *ngIf="(detailsForm.controls['country'].touched || isFormSubmitted)&& detailsForm.controls['country'].errors&& detailsForm.controls['country'].errors['required'] != null">
+                        <strong>required</strong>
+                      </mat-error>
+                      <mat-error
+                        *ngIf="(detailsForm.controls['country'].touched || isFormSubmitted)&& detailsForm.controls['country'].errors&& detailsForm.controls['country'].errors['minlength'] != null">
+                        <strong>min lenght is 5 characters</strong>
+                      </mat-error>
+                      <mat-error
+                        *ngIf="(detailsForm.controls['country'].touched || isFormSubmitted)&& detailsForm.controls['country'].errors&& detailsForm.controls['country'].errors['maxlength'] != null">
+                        <strong>max length is 50 characters</strong>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Street Address</mat-label>
+                      <input matInput placeholder="Street Address" formControlName="streetAddress">
+                      <mat-error
+                        *ngIf="(detailsForm.controls['streetAddress'].touched || isFormSubmitted)&& detailsForm.controls['streetAddress'].errors&& detailsForm.controls['streetAddress'].errors['required'] != null">
+                        <strong>required</strong>
+                      </mat-error>
+                      <mat-error
+                        *ngIf="(detailsForm.controls['streetAddress'].touched || isFormSubmitted)&& detailsForm.controls['streetAddress'].errors&& detailsForm.controls['streetAddress'].errors['minlength'] != null">
+                        <strong>min lenght is 5 characters</strong>
+                      </mat-error>
+                      <mat-error
+                        *ngIf="(detailsForm.controls['streetAddress'].touched || isFormSubmitted)&& detailsForm.controls['streetAddress'].errors&& detailsForm.controls['streetAddress'].errors['maxlength'] != null">
+                        <strong>max length is 50 characters</strong>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <mat-form-field appearance="fill">
+                      <mat-label>City</mat-label>
+                      <input matInput placeholder="City" formControlName="city">
+                      <mat-error
+                        *ngIf="(detailsForm.controls['city'].touched || isFormSubmitted)&& detailsForm.controls['city'].errors&& detailsForm.controls['city'].errors['required'] != null">
+                        <strong>required</strong>
+                      </mat-error>
+                      <mat-error
+                        *ngIf="(detailsForm.controls['city'].touched || isFormSubmitted)&& detailsForm.controls['city'].errors&& detailsForm.controls['city'].errors['minlength'] != null">
+                        <strong>min lenght is 5 characters</strong>
+                      </mat-error>
+                      <mat-error
+                        *ngIf="(detailsForm.controls['city'].touched || isFormSubmitted)&& detailsForm.controls['city'].errors&& detailsForm.controls['city'].errors['maxlength'] != null">
+                        <strong>max length is 50 characters</strong>
+                      </mat-error>
+                    </mat-form-field>
+
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Postcode</mat-label>
+                      <input matInput placeholder="Postcode" formControlName="postCode">
+                      <mat-error
+                        *ngIf="(detailsForm.controls['postCode'].touched || isFormSubmitted)&& detailsForm.controls['postCode'].errors&& detailsForm.controls['postCode'].errors['required'] != null">
+                        <strong>required</strong>
+                      </mat-error>
+                      <mat-error
+                        *ngIf="(detailsForm.controls['postCode'].touched || isFormSubmitted)&& detailsForm.controls['postCode'].errors&& detailsForm.controls['postCode'].errors['pattern'] != null">
+                        <strong>Number only</strong>
+                      </mat-error>
+                    </mat-form-field>
+
+                  </div>
+                  <div class="col-12 col-lg-6">
+
+                    <mat-form-field appearance="fill">
+                      <mat-label>Phone</mat-label>
+                      <input matInput placeholder="Phone" formControlName="Phone">
+                      <mat-error
+                        *ngIf="(detailsForm.controls['Phone'].touched || isFormSubmitted)&& detailsForm.controls['Phone'].errors&& detailsForm.controls['Phone'].errors['required'] != null">
+                        <strong>required</strong>
+                      </mat-error>
+                      <mat-error
+                        *ngIf="(detailsForm.controls['Phone'].touched || isFormSubmitted)&& detailsForm.controls['Phone'].errors&& detailsForm.controls['Phone'].errors['pattern'] != null">
+                        <strong>Should starts with + and number only</strong>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-12 col-lg-6">
+
+                    <mat-form-field appearance="fill">
+                      <mat-label>Email</mat-label>
+                      <input matInput placeholder="Email" formControlName="email">
+                      <mat-error
+                        *ngIf="(detailsForm.controls['email'].touched || isFormSubmitted)&& detailsForm.controls['email'].errors&& detailsForm.controls['email'].errors['required'] != null">
+                        <strong>required</strong>
+                      </mat-error>
+                      <mat-error
+                        *ngIf="(detailsForm.controls['email'].touched || isFormSubmitted)&& detailsForm.controls['email'].errors&& detailsForm.controls['email'].errors['email'] != null">
+                        <strong>Not valid email</strong>
+                      </mat-error>
+
+                    </mat-form-field>
+                  </div>
+                  <div class="col-12 mt-4">
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button [disabled]="detailsForm.invalid" mat-button matStepperNext>Next</button>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
+
+            <mat-step [style.pointer-events]="paymentMethodsForm.invalid?'none':'painted'"
+              [stepControl]="paymentMethodsForm" errorMessage="Payment Methods is required">
+              <form [formGroup]="paymentMethodsForm">
+                <ng-template matStepLabel>Payment Methods</ng-template>
+                <div class="row">
+                  <div class="col-sm-12 col-md-6 col-lg-6">
+                    <div class="form-group d-flex">
+                      <input id="payWithVisa" name='paymentMethod' class="example-margin"
+                        formControlName="paymentMethod" value="visa" type="radio">
+                      <label for="payWithVisa" style="cursor: pointer">Visa</label>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-6 col-lg-6">
+                    <div class="form-group d-flex">
+                      <input class="example-margin" formControlName="paymentMethod" id="payOnCash" name="paymentMethod"
+                        type="radio" value="cash">
+                      <label for="payOnCash" style="cursor: pointer">Cash</label>
+                    </div>
+                  </div>
+                  <div class="text-danger"
+                    *ngIf="(paymentMethodsForm.controls['paymentMethod'].touched || isFormSubmitted)&& paymentMethodsForm.controls['paymentMethod'].errors&& paymentMethodsForm.controls['paymentMethod'].errors['required'] != null">
+                    Payment Method is Required
+                  </div>
+                </div>
+                <div>
+                  <button mat-button matStepperPrevious>Back</button>
+                  <button [disabled]="paymentMethodsForm.invalid" mat-button matStepperNext>Next</button>
+                </div>
+              </form>
+            </mat-step>
+
+            <mat-step [stepControl]="noteForm">
+              <form [formGroup]="noteForm">
+                <ng-template matStepLabel>Place Order</ng-template>
+                <div class="row">
+                  <div class="col-sm-12 col-md-12 col-lg-12">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Note</mat-label>
+                      <textarea matInput placeholder="Note" formControlName="note"></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div>
+                  <button mat-button matStepperPrevious>Back</button>
+                  <button mat-button (click)="submit()">Submit</button>
+                </div>
+              </form>
+            </mat-step>
+          </mat-stepper>
+        </div>
+        <div class="col-lg-5 col-md-6">
+          <div class="checkout__order">
+            <h4 class="order__title">Your order</h4>
+            <div *ngIf="(cartItems$ | async)" class="checkout__order__products">Product <span>Total</span>
+            </div>
+            <ul class="checkout__total__products" *ngIf="cartItems$ | async as cartItems">
+              <li *ngFor="let item of cartItems ;let i = index">
+                0{{i+1}}. {{item.item.title}} <span>
+                  ${{ item.item.price * item.item.amount }}</span>
+              </li>
+            </ul>
+            <ul *ngIf="allAmount$ | async as allAmount" class="checkout__total__all"
+              style="border-bottom: none; margin-bottom: 0;">
+              <li>Subtotal <span>{{allAmount.subTotal |currency}}</span></li>
+              <li>Tax <span>{{allAmount.taxTotal |currency}}</span></li>
+              <li *ngIf="allAmount.coupon">Coupon <span>-{{allAmount.coupon
+                  |currency}}</span>
+              </li>
+              <li>Total <span>{{allAmount.totalAmount |currency}}</span></li>
+            </ul>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Checkout Section End -->
